@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signup</title>
+</head>
+<body>
+	<form action="regCheck.php" method="post">
+		<fieldset>
+			<legend>SIGNUP</legend>
+		
+		<table>
+			<tr>
+				<td>Id</td>
+				<td><input type="text" name="id"></td>
+			</tr>
+
+			<tr>
+				<td>Password</td>
+				<td><input type="password" name="password"></td>
+			</tr>
+			<tr>
+				<td>Confirm Password</td>
+				<td><input type="confirmpassword" name="confirmpassword"></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td><input type="text" name="email"></td>
+			</tr>
+			<tr>
+				    <td>User Type</td>
+					<td>
+					    <select name="usertype" required>
+					    	<option value="">None</option>
+				            <option>User</option>
+				            <option>Admin</option>
+			            </select>
+					</td>
+
+			</tr>
+		</table>
+		<hr/>
+		<input type="submit" value="register" name="register">
+		<a href="login.html">login</a>
+		</fieldset>
+	</form>
+</body>
+</html>

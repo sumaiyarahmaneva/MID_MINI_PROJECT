@@ -1,38 +1,65 @@
 <?php
 	session_start();
 
-	if(isset($_POST['login']))
+	if(isset($_POST['Login']))
 	{
 		if(empty($_POST['id']) || empty($_POST['password']))
 		{
-			echo "null submission";
+			echo "Empty userid or password!";
 
 		}
 		else
 		{
 			
-			$file = fopen('user.txt', 'r');
-			$data = fread($file, filesize('user.txt'));
-			$user = explode('/r/n', $data);
-
-
-			while(!feof($data)){
-				$user = fgets($data);
-				$user = explode('|', $data);
+			$con = mysqli_connect('127.0.0.1', 'root', '', 'mini project');
+			$sql= mysqli_query($con, "select * from registration where id='".$_POST['id']."' and password = '".$_POST['password']."';");
+			$data=mysqli_fetch_assoc($sql);
+			mysqli_close($con);
+			if(!empty($data))
+			{
+				if(isset($_POST['rememberme']))
+				{
+					setcookie('id',$data['id'],time()+3600,'/');
+					setcookie('password',$data['password'],time()+3600,'/');
+					setcookie('name',$data['name'],time()+3600,'/');
+					setcookie('email',$data['email'],time()+3600,'/');
+					setcookie('usertype',$data['usertype'],time()+3600,'/');
+					setcookie('status','set',time()+3600,'/');
+					if($_COOKIE['usertype']=="User")
+					{
+						header('location:user.php');
+					}
+					else
+					{
+						header('location:admin.php');
+					}
+					
+				}
+				else
+				{
+					$_SESSION['id']= $data['id'];
+					$_SESSION['password'] = $data['password'];
+					$_SESSION['name']= $data['name'];
+					$_SESSION['email']= $data['email'];
+					$_SESSION['usertype'] = $data['usertype'];
+					$_SESSION['status']  = "set";
+					if($_SESSION['usertype']=="User")
+					{
+						header('location:user.php');
+					}
+					else
+					{
+						header('location:admin.php');
+					}
+				}
 			}
-
-			print_r($user);
-
-			if(trim($user[0]) == $uname && trim($user[1]) == $password){
-				$_SESSION['status']  = "Ok";
-				header('location:home.php');
-			}else{
-				echo "Invalid username or password";
-			}
+			else
+				echo "Invalic userid Or password";
 		}
-
-	}else{
-		header("location: login.html");
+	}
+	else
+	{
+		header("location:login.html");
 	}
 
 

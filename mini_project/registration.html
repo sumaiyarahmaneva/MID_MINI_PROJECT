@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Signup</title>
+	<title>REGISTRATION</title>
 </head>
 <body>
 	<form action="regCheck.php" method="post">
@@ -18,23 +18,30 @@
 				<td>Password</td>
 				<td><input type="password" name="password"></td>
 			</tr>
+
 			<tr>
 				<td>Confirm Password</td>
-				<td><input type="confirmpassword" name="confirmpassword"></td>
+				<td><input type="password" name="confirmpassword"></td>
 			</tr>
+
+			<tr>
+				<td>Name</td>
+				<td><input type="text" name="name"></td>
+			</tr>
+
 			<tr>
 				<td>Email</td>
 				<td><input type="text" name="email"></td>
 			</tr>
 			<tr>
-				    <td>User Type</td>
-					<td>
-					    <select name="usertype" required>
-					    	<option value="">None</option>
-				            <option>User</option>
-				            <option>Admin</option>
-			            </select>
-					</td>
+				<td>User Type</td>
+				<td>
+					<select name="usertype" required>
+					    <option value="">None</option>
+				        <option>User</option>
+				        <option>Admin</option>
+			        </select>
+				</td>
 
 			</tr>
 		</table>

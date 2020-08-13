@@ -1,34 +1,40 @@
 <?php
-    session_start();
+	session_start();
+
 	if(isset($_POST['register']))
 	{
-		$username = $_POST['username'];
-		$id = $_POST['id'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$confirmpassword = $_POST['confirmPassword'];
-		$usertype = $_POST['usertype'];
-		
-		if(empty($id)||empty($password)||empty($email)||empty($confirmpassword)||empty($name)||empty($usertype))
+		if(empty($_POST['id']) || empty($_POST['password']) || empty($_POST['confirmpassword']) || empty($_POST['name']) || empty($_POST['email']) || empty($_POST['usertype']))
 		{
-			header("location:registration.html");
+			echo "please, fill all the  information";
 		}
-		else{
-			if($password == $confirmpassword)
+		else 
+		{
+			$con = mysqli_connect('127.0.0.1', 'root', '', 'mini project');
+			$result= mysqli_query($con, "select * from registration where id ='".$_POST['id']."';");
+			$data=mysqli_fetch_assoc($result);
+			mysqli_close($con);
+			if(empty($data['id']))
 			{
-				$file = fopen('user.txt','a');
-				fwrite($file, $username.'|'.$id.'|'.$password.'|'.$confirmPassword.'|'.$email.'|'.$usertype."/r/n");
-				fclose($file);
-                header("location:login.html");				
+				if($_POST['password'] == $_POST['confirmpassword'])
+				{
+					$con = mysqli_connect('127.0.0.1', 'root', '', 'mini project');
+					$result = mysqli_query($con, "insert into `registration`(`id`, `password`, `name`, `email`, `usertype`) values ('".$_POST['id']."','".$_POST['password']."','".$_POST['name']."','".$_POST['email']."','".$_POST['usertype']."');");
+					mysqli_close($con);
+					header('location:login.html');
+				}
+				else
+				{
+					echo "password & confirmpassword is not same";
+				}
 			}
 			else
-			{
-				header("location:registration.html");
-			}
+				echo "This id is already exist";
 		}
+
 	}
 	else
 	{
-		header("location:login.html");
+		header("location:registration.html");
 	}
+
 ?>

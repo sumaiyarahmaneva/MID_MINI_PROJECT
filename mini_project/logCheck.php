@@ -20,8 +20,8 @@
 				if(isset($_POST['rememberme']))
 				{
 					setcookie('id',$data['id'],time()+3600,'/');
-					setcookie('password',$data['password'],time()+3600,'/');
 					setcookie('name',$data['name'],time()+3600,'/');
+					setcookie('password',md5($data['password']),time()+3600,'/');
 					setcookie('email',$data['email'],time()+3600,'/');
 					setcookie('usertype',$data['usertype'],time()+3600,'/');
 					setcookie('status','set',time()+3600,'/');
@@ -33,7 +33,6 @@
 					{
 						header('location:admin.php');
 					}
-					
 				}
 				else
 				{
